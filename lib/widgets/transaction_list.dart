@@ -33,13 +33,13 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 3,
+                  elevation: 5,
                   child: Row(
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.symmetric(
                           vertical: 10,
-                          horizontal: 15,
+                          horizontal: 10,
                         ),
                         child: Text(
                           '\$${transaction[index].amount.toStringAsFixed(2)}',
