@@ -51,76 +51,83 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 7,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              cursorColor: Colors.green,
-              decoration: InputDecoration(
-                labelText: 'Title',
-              ),
-              controller: _titleController,
-              //onChanged: (v) => titleInput = v,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 18),
-              child: TextField(
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 7,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TextField(
                 cursorColor: Colors.green,
                 decoration: InputDecoration(
-                  labelText: 'Amount',
+                  labelText: 'Title',
                 ),
-                keyboardType: TextInputType.number,
-                onSubmitted: (_) => _submitData,
-                controller: _amountController,
-                //onChanged: (v) => amountInput = v,
+                controller: _titleController,
+                //onChanged: (v) => titleInput = v,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 50.0, top: 0.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      _selectDate == null
-                          ? 'No date chosen!'
-                          : 'Date:   ${DateFormat.yMd().format(_selectDate)}',
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 18),
+                child: TextField(
+                  cursorColor: Colors.green,
+                  decoration: InputDecoration(
+                    labelText: 'Amount',
                   ),
-                  FlatButton(
-                    textColor: Colors.green[600],
-                    child: Text(
-                      'Choose date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (_) => _submitData,
+                  controller: _amountController,
+                  //onChanged: (v) => amountInput = v,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50.0, top: 0.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        _selectDate == null
+                            ? 'No Date Chosen!'
+                            : 'Date:   ${DateFormat.yMd().format(_selectDate)}',
                       ),
                     ),
-                    onPressed: _presentDayPicker,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: FlatButton(
-                textColor: Colors.white,
-                color: Colors.green[600],
-                child: Text(
-                  'Add Transaction',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: _submitData,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                    FlatButton(
+                      textColor: Colors.green[600],
+                      child: Text(
+                        'Choose date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: _presentDayPicker,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: FlatButton(
+                  textColor: Colors.white,
+                  color: Colors.green[600],
+                  child: Text(
+                    'Add Transaction',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: _submitData,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

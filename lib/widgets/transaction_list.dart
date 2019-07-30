@@ -11,78 +11,96 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: MediaQuery.of(context).size.height * 0.6,
       child: transaction.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  'No transactions added yet!',
-                  style: Theme.of(context).textTheme.title,
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  height: 300,
-                  child: Image.asset(
-                    'assets/images/zzz.png',
-                    fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (context, constraints) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    'No transactions added yet!',
+                    style: Theme.of(context).textTheme.title,
                   ),
-                ),
-              ],
-            )
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/zzz.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            })
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 5,
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 10,
-                        ),
-                        child: Text(
-                          '\$${transaction[index].amount.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.green[900],
+                      Expanded(
+                        flex: 0,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 10,
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.green[100],
-                          border: Border.all(
-                            color: Colors.green,
-                            width: 2,
-                          ),
-                        ),
-                        padding: EdgeInsets.all(4),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            transaction[index].title,
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                          Text(
-                            DateFormat.yMMMMEEEEd()
-                                .format(transaction[index].date),
+                          child: Text(
+                            '\$${transaction[index].amount.toStringAsFixed(2)}',
                             style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.green[900],
                             ),
                           ),
-                        ],
+                          decoration: BoxDecoration(
+                            color: Colors.green[100],
+                            border: Border.all(
+                              color: Colors.green,
+                              width: 2,
+                            ),
+                          ),
+                          padding: EdgeInsets.all(4),
+                        ),
                       ),
                       Expanded(
-                        child: IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Colors.red,
-                          iconSize: 25,
-                          onPressed: () => deleteTx(transaction[index].id),
+                        flex: 1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              transaction[index].title,
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                            Text(
+                              DateFormat.yMMMMEEEEd()
+                                  .format(transaction[index].date),
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      Expanded(
+                        flex: 0,
+                        child: MediaQuery.of(context).size.width > 500
+                            ? FlatButton.icon(
+                                icon: Icon(Icons.delete),
+                                label: Text('delete'),
+                                textColor: Colors.red,
+                                onPressed: () =>
+                                    deleteTx(transaction[index].id),
+                              )
+                            : IconButton(
+                                icon: Icon(Icons.delete),
+                                color: Colors.red,
+                                iconSize: 25,
+                                onPressed: () =>
+                                    deleteTx(transaction[index].id),
+                              ),
                       ),
                     ],
                   ),
