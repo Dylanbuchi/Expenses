@@ -3,11 +3,11 @@ import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
-import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final fontFamily2 = 'OpenSans';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
-                fontFamily: 'OpenSans',
+                fontFamily: fontFamily2,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 title: TextStyle(
-                  fontFamily: 'OpenSans',
+                  fontFamily: fontFamily2,
                   fontSize: 20,
                 ),
               ),
@@ -46,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
+//EXample of transaction to display
 /*     Transaction(
       id: 't1',
       title: 'New Shoes',
@@ -80,9 +81,11 @@ class _MyHomePageState extends State<MyHomePage> {
       id: DateTime.now().toString(),
     );
 
-    setState(() {
-      _userTransactions.add(newTx);
-    });
+    setState(
+      () {
+        _userTransactions.add(newTx);
+      },
+    );
   }
 
   void _startAddNewTransaction(BuildContext ctx) {
@@ -112,8 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
     final appBar = AppBar(
-      title: Text(
+      title: const Text(
         'Personal Expenses',
       ),
       actions: <Widget>[
@@ -123,11 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    final mediaQuerySize = (mediaQuery.size.height -
+        appBar.preferredSize.height -
+        mediaQuery.padding.top);
+
     final txListWidget = Container(
-      height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
-          0.7,
+      height: mediaQuerySize * 0.7,
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
     return Scaffold(
@@ -145,29 +150,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   Switch(
                     value: _showChart,
                     onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
+                      setState(
+                        () {
+                          _showChart = val;
+                        },
+                      );
                     },
                   ),
                 ],
               ),
             if (!isLandscape)
               Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.3,
+                height: mediaQuerySize * 0.3,
                 child: Chart(_recentTransactions),
               ),
             if (!isLandscape) txListWidget,
             if (isLandscape)
               _showChart
                   ? Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.7,
+                      height: mediaQuerySize * 0.7,
                       child: Chart(_recentTransactions),
                     )
                   : txListWidget
