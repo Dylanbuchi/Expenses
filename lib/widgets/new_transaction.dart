@@ -49,6 +49,9 @@ class _NewTransactionState extends State<NewTransaction> {
     );
   }
 
+  final textStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -73,7 +76,9 @@ class _NewTransactionState extends State<NewTransaction> {
                 //onChanged: (v) => titleInput = v,
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 18),
+                padding: const EdgeInsets.only(
+                  bottom: 18,
+                ),
                 child: TextField(
                   cursorColor: Colors.green,
                   decoration: InputDecoration(
@@ -86,7 +91,10 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 50.0, top: 0.0),
+                padding: const EdgeInsets.only(
+                  bottom: 50.0,
+                  top: 0.0,
+                ),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -100,9 +108,7 @@ class _NewTransactionState extends State<NewTransaction> {
                       textColor: Colors.green[600],
                       child: Text(
                         'Choose date',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textStyle,
                       ),
                       onPressed: _presentDayPicker,
                     ),
@@ -116,9 +122,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   color: Colors.green[600],
                   child: Text(
                     'Add Transaction',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: textStyle,
                   ),
                   onPressed: _submitData,
                   shape: RoundedRectangleBorder(

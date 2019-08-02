@@ -1,38 +1,48 @@
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
-  final List<Transaction> transaction;
-  final Function deleteTx;
-
+  final transaction;
+  final deleteTx;
   TransactionList(this.transaction, this.deleteTx);
+
+  final horizontal = 10.0;
+  final vertical = 10.0;
+
+  final text = 'No transactions added yet!';
+  final image = 'assets/images/zzz.png';
+  final deleteIcon = Icon(Icons.delete);
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final themeTitle = Theme.of(context).textTheme.title;
+
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: mediaQuery.size.height * 0.6,
       child: transaction.isEmpty
-          ? LayoutBuilder(builder: (context, constraints) {
-              return Column(
-                children: <Widget>[
-                  Text(
-                    'No transactions added yet!',
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    height: constraints.maxHeight * 0.6,
-                    child: Image.asset(
-                      'assets/images/zzz.png',
-                      fit: BoxFit.cover,
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: <Widget>[
+                    Text(
+                      text,
+                      style: themeTitle,
                     ),
-                  ),
-                ],
-              );
-            })
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Container(
+                      height: constraints.maxHeight * 0.6,
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
@@ -43,8 +53,8 @@ class TransactionList extends StatelessWidget {
                         flex: 0,
                         child: Container(
                           margin: EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10,
+                            vertical: vertical,
+                            horizontal: horizontal,
                           ),
                           child: Text(
                             '\$${transaction[index].amount.toStringAsFixed(2)}',
@@ -71,7 +81,7 @@ class TransactionList extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               transaction[index].title,
-                              style: Theme.of(context).textTheme.title,
+                              style: themeTitle,
                             ),
                             Text(
                               DateFormat.yMMMMEEEEd()
@@ -86,16 +96,16 @@ class TransactionList extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 0,
-                        child: MediaQuery.of(context).size.width > 500
+                        child: mediaQuery.size.width > 500
                             ? FlatButton.icon(
-                                icon: Icon(Icons.delete),
+                                icon: deleteIcon,
                                 label: Text('delete'),
                                 textColor: Colors.red,
                                 onPressed: () =>
                                     deleteTx(transaction[index].id),
                               )
                             : IconButton(
-                                icon: Icon(Icons.delete),
+                                icon: deleteIcon,
                                 color: Colors.red,
                                 iconSize: 25,
                                 onPressed: () =>
