@@ -1,4 +1,4 @@
-#Expenses App made with Flutter
+# Expenses App made with Flutter
 
 Demo:
 
